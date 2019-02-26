@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    db:
+        image: mysql:5.7
+        restart: always
+        ports:
+            - "3309:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=Lab2018*
+            - MYSQL_DATABASE=findb
+        networks:
+           - red
+    web:
+        build: .
+        command: python dj/manage.py runserver 0.0.0.0:8001
+        volumes:
+            - .:/code
+        restart: always
+        ports:
+            - "8000:8001"
+        depends_on:
+            - db
+        networks:
+           - red
+
+networks:
+           red:
+        
+
